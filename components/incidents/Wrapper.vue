@@ -29,7 +29,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="incident-title">Fecha del incidente</label>
-        <input type="date" class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" v-model="incident.date">
+        <input type="date" class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" v-model="incident.date" >
       </div>
       <button type="submit" class="bg-main text-white font-medium py-3 px-4 w-[280px] rounded-[6px] flex gap-4 justify-center items-center">
         <span>Reportar incidente</span>
@@ -40,6 +40,8 @@
 </template>
 
 <script setup lang="ts">
+import { statusKeys } from '~/constants/statusKeys';
+
 const { getAllServices } = useServices();
 const { createIncident } = useIncidents();
 
@@ -47,6 +49,7 @@ const services = ref();
 const responseError = ref('');
 const isLoading = ref(false);
 const user = useSupabaseUser();
+const openedStatus = 1;
 
 onMounted(() => {
   getServices();
@@ -66,6 +69,7 @@ const incident = reactive({
   date: '',
   'service_id': '',
   'profile_id': user.value?.id,
+  'status_id': statusKeys.PENDING,
 });
 
 const insertIncident = async () => {
