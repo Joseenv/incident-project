@@ -1,14 +1,15 @@
-import { ref } from 'vue'
+export const useUser = () => {
+  const supabaseClient = useSupabaseClient();
 
-const user = ref({})
+  const getUserData = async (userId: string) => {
+    const { data, error } = await supabaseClient.from("profiles").select().eq("id", userId).single();
 
-export function useUser() {
-  const setUser = (userInfo) => {
-    user.value = { ...userInfo }
+    if (error) throw error
+
+    return data
   }
 
   return {
-    user,
-    setUser
+    getUserData
   }
 }

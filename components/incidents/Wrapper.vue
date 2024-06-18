@@ -49,7 +49,6 @@ const services = ref();
 const responseError = ref('');
 const isLoading = ref(false);
 const user = useSupabaseUser();
-const openedStatus = 1;
 
 onMounted(() => {
   getServices();

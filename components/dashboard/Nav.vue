@@ -1,10 +1,28 @@
 <template>
   <nav>
     <ul class="flex flex-col gap-6">
-      <li v-for="link in dashboardLinks" :key="link.name">
-        <NuxtLink :to="link.path" class="text-softDark py-2 px-10 hover:text-main flex gap-2 items-center">
-          <img :src="link.icon" alt="Action Icon" class="object-cover">
-          <span>{{ link.name }}</span>
+      <li>
+        <NuxtLink to="/dashboard" class="text-softDark py-2 px-10 hover:text-main flex gap-2 items-center">
+          <img src="/icons/dashboard-icon.svg" alt="Action Icon" class="object-cover">
+          <span>Dashboard</span>
+        </NuxtLink>
+      </li>
+      <li v-if="userData.role_id === rolesKeys.ADMIN">
+        <NuxtLink to="/dashboard/technicians" class="text-softDark py-2 px-10 hover:text-main flex gap-2 items-center">
+          <img src="/icons/add-incidence.svg" alt="Action Icon" class="object-cover">
+          <span>Técnicos</span>
+        </NuxtLink>
+      </li>
+      <li v-else>
+        <NuxtLink to="/dashboard/incidents" class="text-softDark py-2 px-10 hover:text-main flex gap-2 items-center">
+          <img src="/icons/add-incidence.svg" alt="Action Icon" class="object-cover">
+          <span>Incidencias</span>
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/dashboard/reports" class="text-softDark py-2 px-10 hover:text-main flex gap-2 items-center">
+          <img src="/icons/reports-icon.svg" alt="Action Icon" class="object-cover">
+          <span>Reportes</span>
         </NuxtLink>
       </li>
     </ul>
@@ -12,24 +30,16 @@
 </template>
 
 <script setup lang="ts">
-import DashboardIcon from '/icons/dashboard-icon.svg'
-import AddIncidentsIcon from '/icons/add-incidence.svg'
-import ReportsIcon from '/icons/reports-icon.svg'
+import { rolesKeys } from '~/constants/rolesKeys';
+const user = useSupabaseUser();
+const userData = ref({});
 
-interface DashboardLink {
-  name: string
-  path: string
-  icon: string
-}
+const { getUserData } = useUser();
 
-const dashboardLinks: DashboardLink[] = [
-  { name: 'Dashboard', path: '/dashboard', icon: DashboardIcon },
-  { name: 'Incidencias', path: '/dashboard/incidents', icon: AddIncidentsIcon },
-  { name: 'Reportes', path: '/dashboard/reports', icon: ReportsIcon },
-  // { name: 'Servicios', path: '/dashboard/services' },
-  // { name: 'Usuarios', path: '/dashboard/users' },
-  // { name: 'Técnicos', path: '/dashboard/technicians' },
-]
+onMounted(async () => {
+  userData.value = await getUserData(user.value?.id as string);
+  // console.log(userData.value);
+});
 </script>
 
 <style scoped>
