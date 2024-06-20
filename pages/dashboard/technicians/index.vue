@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="flex items-center justify-center">
-      <TechniciansCreationWrapper />
+      <!-- <TechniciansCreationWrapper /> -->
+      <TechniciansList />
     </div>
   </div>
 </template>

@@ -10,7 +10,7 @@
       <li v-if="userData.role_id === rolesKeys.ADMIN">
         <NuxtLink to="/dashboard/technicians" class="text-softDark py-2 px-10 hover:text-main flex gap-2 items-center">
           <img src="/icons/add-incidence.svg" alt="Action Icon" class="object-cover">
-          <span>Técnicos</span>
+          <span>Colaboradores</span>
         </NuxtLink>
       </li>
       <li v-else>
