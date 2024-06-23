@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "@nuxtjs/supabase"],
+  modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "@nuxtjs/supabase", "@sidebase/nuxt-pdf", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
   css: ["~/assets/css/main.css"],
   shadcn: {
     /**

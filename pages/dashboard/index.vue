@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { rolesKeys } from '~/constants/rolesKeys';
+import { useIncidentsStore } from '~/stores/incidents';
 
 definePageMeta({
   layout: 'dashboard'
 })
 
 const user = useSupabaseUser();
+const incidentStore = useIncidentsStore();
+
 const { getIncidentsByUser, getAllIncidents } = useIncidents();
 const { getUserData } = useUser();
 
@@ -23,7 +26,7 @@ const isUserRol = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.val
 const getIncidents = async () => {
   try {
     incidents.value = isUserRol ? await getIncidentsByUser(user.value?.id as string) : await getAllIncidents()
-    console.log(incidents.value);
+    incidentStore.setCurrentIncidents(incidents.value);
   } catch (error) {
     console.error(error);
   }
