@@ -3,8 +3,8 @@ import { rolesKeys } from "~/constants/rolesKeys";
 export const useTechnicians = () => {
   const supabaseClient = useSupabaseClient();  
 
-  const createNewTechnician = async (employeeName: string) => {
-    const { data, error } = await supabaseClient.from('employees').insert([{ name: employeeName }] as never[]).select();
+  const createNewTechnician = async (technician: any) => {
+    const { data, error } = await supabaseClient.from('employees').insert(technician).select();
     if (error) throw error;
     navigateTo('/dashboard/technicians');
   }
@@ -15,8 +15,9 @@ export const useTechnicians = () => {
     return data;
   }
 
-  const updateTechnician = async (employeeId: number, employeeName: string) => {
-    const { data, error } = await supabaseClient.from('employees').update({ name: employeeName }).eq('id', employeeId);
+  const updateTechnician = async ({id, name, email, phone}: {id: number, name: string, email: string, phone: number}) => {
+    console.log({id, name, email, phone});
+    const { data, error } = await supabaseClient.from('employees').update({ name, phone, email }).eq('id', id);
     if (error) throw error;
     // window.location.reload();
     navigateTo('/dashboard/technicians');

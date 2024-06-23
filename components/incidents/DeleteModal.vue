@@ -4,7 +4,7 @@
   </button>
   <Teleport to="body">
     <div v-if="isOpen" class="fixed top-0 left-0 bottom-0 right-0 w-full h-full flex justify-center items-center bg-[#30303080]">
-      <div class="p-8 bg-bgMain border border-solid border-borderDefault rounded-[8px] bg-[#FAFAFA] max-w-[720px] h-[380px] flex flex-col items-center justify-center">
+      <div class="p-8 border border-solid border-borderDefault rounded-[8px] bg-[#FAFAFA] max-w-[720px] h-[380px] flex flex-col items-center justify-center">
         <div class="flex flex-col gap-4 mb-8">
           <h2 class="text-2xl font-medium">Eliminar incidente</h2>
           <p class="text-gray-600">¿Estás seguro de que deseas eliminar el incidente reportado? Esta acción no se puede deshacer.</p>

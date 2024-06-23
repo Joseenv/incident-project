@@ -7,7 +7,7 @@
   <Teleport to="body">
     <div v-if="isOpen"
       class="fixed top-0 left-0 bottom-0 right-0 w-full h-full flex justify-center items-center bg-[#30303080]">
-      <div class="p-8 bg-bgMain border border-solid border-borderDefault rounded-[8px] bg-[#FAFAFA] max-w-[720px]">
+      <div class="p-8 border border-solid border-borderDefault rounded-[8px] bg-[#FAFAFA] max-w-[720px]">
         <div class="flex flex-col gap-4 mb-8">
           <div class="flex justify-between items-center w-full">
             <h2 class="text-2xl font-medium">Actualizar información de técnico.</h2>
@@ -17,12 +17,28 @@
         </div>
         <form class="flex flex-col gap-10" @submit="updateEmployee">
           <div class="flex flex-col gap-4 mb-4">
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2"> 
               <label for="incident-title">
-                <span>Nombre del técnico</span>
+                <span>Nombre</span>
                 <span class="text-error"> *</span>
               </label>
               <input v-model="currentTechnician.name" type="text"
+                class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" required>
+            </div>
+            <div class="flex flex-col gap-2"> 
+              <label for="incident-title">
+                <span>Correo de contacto</span>
+                <span class="text-error"> *</span>
+              </label>
+              <input v-model="currentTechnician.email" type="email"
+                class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" required>
+            </div>
+            <div class="flex flex-col gap-2"> 
+              <label for="incident-title">
+                <span>Celular de contacto</span>
+                <span class="text-error"> *</span>
+              </label>
+              <input v-model="currentTechnician.phone" type="tel"
                 class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" required>
             </div>
           </div>
@@ -62,7 +78,7 @@ const setCurrentTechnician = (technician) => {
 const updateEmployee = async () => {
   try {
     isLoading.value = true;
-    await updateTechnician(currentTechnician.value.id, currentTechnician.value.name);
+    await updateTechnician(currentTechnician.value);
   } catch (error: any) {
     console.error(error);
   } finally {

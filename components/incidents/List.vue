@@ -23,11 +23,11 @@
         v-for="incident in originalIncidents" :key="incident.id"
         :to="{ name: 'dashboard-id', params: { id: incident.id } }" 
       >
-        <article class="p-4 bg-white border border-borderGray rounded-md w-[520px] flex flex-col justify-between h-full">
+        <article class="p-4 bg-cardWhite border border-borderGray rounded-md max-w-[520px] flex flex-col justify-between h-full hover:bg-overlayHover hover:border-borderOverlay">
           <div class="flex flex-col mb-3">
-            <div class="flex justify-between items-center">
-              <h3 class="text-lg font-semibold text-softDark">{{ incident.title }}</h3>
-              <span class="text-softDark text-sm">{{ incident.date }}</span>
+            <div class="flex justify-between items-baseline">
+              <h3 class="text-lg font-semibold text-softDark w-full">{{ incident.title }}</h3>
+              <span class="text-softDark text-sm w-full text-right">{{ incident.date }}</span>
             </div>
             <span class="text-main text-sm inline-block">{{ incident.status.name }}</span>
           </div>
