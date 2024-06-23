@@ -6,38 +6,34 @@ definePageMeta({
 })
 
 const user = useSupabaseUser();
-const userData = ref({});
+const { getIncidentsByUser, getAllIncidents } = useIncidents();
+const { getUserData } = useUser();
 
+const userData = ref({});
 const incidents = ref([]);
   
 onMounted(async () => {
   userData.value = await getUserData(user.value?.id as string);
   console.log(userData.value);
   getIncidents();
-  console.log(incidents.value);
 });
-  
-const { getIncidentsByUser, getAllIncidents } = useIncidents();
-const { getUserData } = useUser();
+
+const isUserRol = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.value.role_id === null)
 
 const getIncidents = async () => {
   try {
-    incidents.value = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.value.role_id === null) 
-      ? await getIncidentsByUser(user.value?.id as string) 
-      : await getAllIncidents()
+    incidents.value = isUserRol ? await getIncidentsByUser(user.value?.id as string) : await getAllIncidents()
+    console.log(incidents.value);
   } catch (error) {
     console.error(error);
   }
 }
 
-const title = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.value.role_id === null) 
-  ? 'Mis incidentes reportados' 
-  : 'Incidentes reportados';
+const title = isUserRol ? 'Mis incidentes reportados' : 'Incidentes reportados';
 
-const description = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.value.role_id === null) 
+const description = isUserRol 
   ? 'Aquí puedes revisar y gestionar todos los incidentes que has reportado. Consulta el estado de cada reporte y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.' 
   : 'Aquí puedes revisar y gestionar todos los incidentes reportados por los empleados. Consulta el estado de cada reporte, actualiza la información necesario y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.';
-
 </script>
 
 <template>

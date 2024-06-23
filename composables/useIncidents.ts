@@ -2,25 +2,12 @@ export const useIncidents = () => {
   
   const supabaseClient = useSupabaseClient();
 
-  // interface Incident {
-  //   id: number;
-  //   title: string;
-  //   description: string;
-  //   service_id: number;
-  //   date: string;
-  //   status_id: number;
-  //   employee_id: number;
-  // }
-
   const getIncidentsByUser = async (userId:string) => {
-    // console.log(userId);
-      const { data, error } = await supabaseClient.from("incidents").select(`*, status (id, name ), services (id, name), employees (id, name)`).eq("profile_id", userId)
-      if (error) throw error;
-      return data;
+    const { data, error } = await supabaseClient.from("incidents").select(`*, status (id, name ), services (id, name), employees (id, name)`).eq("profile_id", userId)
+    if (error) throw error;
+    return data;
   }
-
-  // employees (id, name)
-
+  
   const createIncident = async (incident:any) => {
     const { data, error } = await supabaseClient.from("incidents").insert(incident).select();
     if (error) throw error;
@@ -32,10 +19,8 @@ export const useIncidents = () => {
     if (error) throw error;
     return data;
   }
-  //Hacer una sola instancia de supabase con el composable
   
   const updateIncident = async (incident:any) => {
-    console.log("Incident", {incident});
     const { data, error } = await supabaseClient.from("incidents").update([
       {
         title: incident.title,
@@ -57,11 +42,18 @@ export const useIncidents = () => {
     return data;
   }
 
+  const deleteIncident = async (incidentId:any) => {
+    const { data, error } = await supabaseClient.from("incidents").delete().eq("id", incidentId);
+    if (error) throw error;
+    navigateTo("/dashboard");
+  }
+
   return {
     getIncidentsByUser,
     createIncident,
     getAllIncidents,
     updateIncident,
-    getIncidetById
+    getIncidetById,
+    deleteIncident,
   };
 };

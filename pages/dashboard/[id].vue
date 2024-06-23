@@ -1,10 +1,13 @@
 <template>
   <div class="w-full p-8 bg-bgMain border border-solid border-borderDefault rounded-[8px]">
     <div class="flex flex-col gap-4 mb-8">
-      <h2 class="text-2xl font-medium">Editar incidente</h2>
+      <div class="flex justify-between items-center w-full">
+        <h2 class="text-2xl font-medium">Editar incidente</h2>
+        <IncidentsDeleteModal :incident="newIncident"/>
+      </div>
       <p class="text-gray-600">En esta sección, podrás actualizar incidentes de manera rápida y sencilla. Tu colaboración es fundamental para mantener nuestro entorno seguro y bien informado. ¡Gracias por tu apoyo!</p>
     </div>
-    <form class="p-8 grid grid-cols-2 gap-12" @submit="updateIncidentRegister">
+    <form class="p-8 grid grid-cols-2 gap-12" @submit.prevent="updateIncidentRegister">
       <div class="flex flex-col gap-2">
         <label for="incident-title">
           <span>Título del incidente</span>
@@ -37,14 +40,14 @@
               <div class="flex flex-col gap-2">
                 <label for="incident-title">Trabajador asignado</label>
                 <select name="employee" id="employee" class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" v-model="newIncident.employee_id">
-                  <option value="">Selecciona un servicio</option>
+                  <option value="">Selecciona un trabajador</option>
                   <option v-for="employee in employees" :key="employee.id" :value="employee.id">{{ employee.name }}</option>
                 </select>
               </div>
               <div class="flex flex-col gap-2">
                 <label for="incident-title">Estado actual</label>
                 <select name="status" id="status" class="bg-white border-[1px] border-solid border-borderDefault rounded-[4px] p-2 outline-main" v-model="newIncident.status_id">
-                  <option value="">Selecciona un servicio</option>
+                  <option value="">Selecciona un estado</option>
                   <option v-for="state in status" :key="state.id" :value="state.id">{{ state.name }}</option>
                 </select>
               </div>
@@ -52,10 +55,13 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="bg-main text-white font-medium py-3 px-4 w-[280px] rounded-[6px] flex gap-4 justify-center items-center">
-        <span>Actualizar incidente</span>
-        <SharedSpinner v-if="isLoading"/>
-      </button>
+      <div class="flex gap-8 items-center">
+        <button type="submit" class="bg-main text-white font-medium py-[10px] px-5 rounded-[6px] flex gap-4 justify-center items-center">
+          <span>Actualizar incidente</span>
+          <SharedSpinner v-if="isLoading"/>
+        </button>
+        <span class="text-error font-medium cursor-pointer" @click="backToDashboard">Cancelar</span>
+      </div>
     </form>
   </div>
 </template>
@@ -64,6 +70,11 @@
 import { rolesKeys } from '~/constants/rolesKeys';
 
 const route = useRoute();
+const router = useRouter();
+
+const backToDashboard = () => {
+  router.push('/dashboard');
+}
 
 const user = useSupabaseUser();
 
