@@ -38,7 +38,6 @@ const { getUserData } = useUser();
 
 onMounted(async () => {
   userData.value = await getUserData(user.value?.id as string);
-  // console.log(userData.value);
 });
 </script>
 

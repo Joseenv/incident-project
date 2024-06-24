@@ -106,7 +106,6 @@ onMounted(() => {
 const getUserInfo = async () => {
   try {
     userData.value = await getUserData(user.value?.id as string);
-    console.log(userData.value);
   } catch (error: any) {
     console.error(error);
   }

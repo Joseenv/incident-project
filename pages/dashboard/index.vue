@@ -14,29 +14,31 @@ const { getUserData } = useUser();
 
 const userData = ref({});
 const incidents = ref([]);
+
+const isUserRol = ref(false);
   
 onMounted(async () => {
   userData.value = await getUserData(user.value?.id as string);
-  console.log(userData.value);
   getIncidents();
 });
 
-const isUserRol = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.value.role_id === null)
 
 const getIncidents = async () => {
   try {
-    incidents.value = isUserRol ? await getIncidentsByUser(user.value?.id as string) : await getAllIncidents()
+    isUserRol.value = (userData.value.role_id === rolesKeys.EMPLOYEE || userData.value.role_id === null)
+
+    incidents.value = isUserRol.value ? await getIncidentsByUser(user.value?.id as string) : await getAllIncidents()
     incidentStore.setCurrentIncidents(incidents.value);
   } catch (error) {
     console.error(error);
   }
 }
 
-const title = isUserRol ? 'Mis incidentes reportados' : 'Incidentes reportados';
+const title = isUserRol.value ? 'Mis incidentes reportados' : 'Incidentes reportados';
 
-const description = isUserRol 
+const description = isUserRol.value
   ? 'Aquí puedes revisar y gestionar todos los incidentes que has reportado. Consulta el estado de cada reporte y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.' 
-  : 'Aquí puedes revisar y gestionar todos los incidentes reportados por los empleados. Consulta el estado de cada reporte, actualiza la información necesario y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.';
+  : 'Aquí puedes revisar y gestionar todos los incidentes reportados por los usuarios. Consulta el estado de cada reporte, actualiza la información necesario y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.';
 </script>
 
 <template>

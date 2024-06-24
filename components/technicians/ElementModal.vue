@@ -67,7 +67,6 @@ const currentTechnician = ref({});
 
 onMounted(async () => {
   technicians.value = await getAllTechnicians();
-  console.log(technicians.value);
 });
 
 const setCurrentTechnician = (technician) => {

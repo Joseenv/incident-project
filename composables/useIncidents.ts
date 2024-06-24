@@ -36,7 +36,6 @@ export const useIncidents = () => {
   }
 
   const getIncidetById = async (incidentId:any) => {
-    console.log("Incident", {incidentId});
     const { data, error } = await supabaseClient.from("incidents").select(`*, status (id, name ), services (id, name), employees (id, name)`).eq("id", incidentId).single();
     if (error) throw error;
     return data;

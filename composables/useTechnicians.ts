@@ -16,7 +16,6 @@ export const useTechnicians = () => {
   }
 
   const updateTechnician = async ({id, name, email, phone}: {id: number, name: string, email: string, phone: number}) => {
-    console.log({id, name, email, phone});
     const { data, error } = await supabaseClient.from('employees').update({ name, phone, email }).eq('id', id);
     if (error) throw error;
     // window.location.reload();
