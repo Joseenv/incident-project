@@ -16,10 +16,13 @@ const userData = ref({});
 const incidents = ref([]);
 
 const isUserRol = ref(false);
+const title = ref('');
+const description = ref('');
   
 onMounted(async () => {
   userData.value = await getUserData(user.value?.id as string);
   getIncidents();
+  setInformation();
 });
 
 
@@ -34,11 +37,14 @@ const getIncidents = async () => {
   }
 }
 
-const title = isUserRol.value ? 'Mis incidentes reportados' : 'Incidentes reportados';
+const setInformation = () => {
+  title.value = isUserRol.value ? 'Mis incidentes reportados' : 'Incidentes reportados';
+  
+  description.value = isUserRol.value
+    ? 'Aquí puedes revisar y gestionar todos los incidentes que has reportado. Consulta el estado de cada reporte y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.' 
+    : 'Aquí puedes revisar y gestionar todos los incidentes reportados por los usuarios. Consulta el estado de cada reporte, actualiza la información necesario y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.';
+}
 
-const description = isUserRol.value
-  ? 'Aquí puedes revisar y gestionar todos los incidentes que has reportado. Consulta el estado de cada reporte y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.' 
-  : 'Aquí puedes revisar y gestionar todos los incidentes reportados por los usuarios. Consulta el estado de cada reporte, actualiza la información necesario y asegúrate de que se estén tomando las medidas adecuadas para mejorar la seguridad y el bienestar de los laboratorios.';
 </script>
 
 <template>
